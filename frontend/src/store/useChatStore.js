@@ -2,7 +2,7 @@ import { create } from "zustand";
 import toast from "react-hot-toast";
 import { axiosInstance } from "../lib/axios";
 import { useAuthStore } from "./useAuthStore";
-
+import axios from "axios";
 export const useChatStore = create((set, get) => ({
   messages: [],
   users: [],
@@ -33,6 +33,7 @@ export const useChatStore = create((set, get) => ({
       set({ isMessagesLoading: false });
     }
   },
+
   sendMessage: async (messageData) => {
     const { selectedUser, messages } = get();
     try {
@@ -42,6 +43,19 @@ export const useChatStore = create((set, get) => ({
       toast.error(error.response.data.message);
     }
   },
+  deleteMessage: async (id) => {
+    console.log("Deleting message with ID:", id);
+    try {
+      const { remoteUser:userId } = get();
+      const res = await axiosInstance.delete(`/message/${id}`);
+      console.log("message deleted : ",res);
+      await get().getMessages(userId);
+
+    } catch (error) {
+      console.log(error)
+    }
+  },
+
 
   subscribeToMessages: () => {
     const { selectedUser } = get();

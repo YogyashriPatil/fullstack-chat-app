@@ -1,5 +1,5 @@
 import { useChatStore } from "../store/useChatStore";
-
+import Chatbot from "../components/Chatbot";
 import Sidebar from "../components/Sidebar";
 import NoChatSelected from "../components/NoChatSelected";
 import ChatContainer from "../components/ChatContainer";
@@ -15,6 +15,9 @@ const HomePage = () => {
             <Sidebar />
 
             {!selectedUser ? <NoChatSelected /> : <ChatContainer />}
+            <div className="w-1/4 bg-base-300 flex flex-col">
+              <Chatbot />
+            </div>
           </div>
         </div>
       </div>

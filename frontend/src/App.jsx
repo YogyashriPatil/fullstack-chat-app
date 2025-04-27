@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar";
-
+import ForgotPassword from "./pages/ForgotPassword"; // adjust path if needed
+import ResetPassword from "./pages/ResetPassword"; // also import Reset page
 import HomePage from "./pages/HomePage";
 import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage";
@@ -43,6 +44,8 @@ const App = () => {
         <Route path="/login" element={!authUser ? <LoginPage /> : <Navigate to="/" />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/profile" element={authUser ? <ProfilePage /> : <Navigate to="/login" />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
 
       <Toaster />
