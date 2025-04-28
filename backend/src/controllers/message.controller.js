@@ -76,10 +76,10 @@ export const deleteMessage = async (req, res) => {
     }    
     const userId = req.user._id;
     const message = await Message.findById(messageId);
-    console.log(message)
-    if (!message) {
-      return res.status(404).send("Message not found");
-    }
+    // console.log(message)
+    // if (!message) {
+    //   return res.status(404).send("Message not found");
+    // }
 
     if (message.senderId.toString() !== userId.toString()) {
       return res.status(403).send("You are not authorized to delete this message");
@@ -98,7 +98,7 @@ export const deleteMessage = async (req, res) => {
     res.status(500).send("Internal server error: " + error.message);
   }
 };
-const uploadVideo = async (req, res) => {
+export const uploadVideo = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).send('No video file uploaded');

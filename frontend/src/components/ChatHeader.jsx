@@ -13,6 +13,33 @@ const ChatHeader = ({caller,receiver}) => {
   const [isVideoCallActive, setIsVideoCallActive] = useState(false);
   
   useEffect(()=>{
+    async function  getMedia(){
+    try 
+    {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+    const hasVideo = devices.some(device => device.kind === 'videoinput');
+    const hasAudio = devices.some(device => device.kind === 'audioinput');
+
+    if (!hasVideo && !hasAudio) {
+      alert('No camera or microphone found!');
+      return;
+    }
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    console.log('Got media stream:', stream);
+      
+    } 
+    catch (error) {
+      console.error('Media access error:', error);
+      if (error.name === 'NotFoundError') {
+        alert('No camera or microphone found!');
+      } else if (error.name === 'NotAllowedError') {
+        alert('Permission denied! Please allow camera and microphone.');
+      } else {
+        alert('Error accessing media devices: ' + error.message);
+      }
+    }
+  }
+    getMedia();
     if (callStatus === "incoming" || callStatus === "outgoing") {
       setIsVideoCallActive(true);
     } else {
